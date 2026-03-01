@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="vi" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thời Khóa Biểu HKII - Premium</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"DM Sans"', 'sans-serif'],
+                        heading: ['Satoshi', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#1C1917',
+                        secondary: '#44403C',
+                        accent: '#CA8A04', // Gold
+                        background: '#FAFAF9',
+                        text: '#0C0A09',
+                    },
+                    boxShadow: {
+                        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.07)',
+                        'glass-dark': '0 8px 32px 0 rgba(0, 0, 0, 0.3)',
+                    },
+                    animation: {
+                        'blob': 'blob 7s infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@700,500,900&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Satoshi', sans-serif;
+        }
+
+        /* Modern Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #d6d3d1;
+            border-radius: 8px;
+        }
+
+        .dark ::-webkit-scrollbar-thumb {
+            background: #44403C;
+        }
+
+        /* Liquid Glass effect */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .dark .glass-panel {
+            background: rgba(28, 25, 23, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Ambient Orbs */
+        .ambient-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        /* Class card styling (Premium) */
+        .class-card {
+            background: linear-gradient(135deg, rgba(202, 138, 4, 0.1) 0%, rgba(202, 138, 4, 0.02) 100%);
+            border-left: 3px solid #CA8A04;
+            color: #1C1917;
+            border-radius: 6px;
+            padding: 4px 6px;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            font-size: 0.8rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 100%;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+        }
+
+        .dark .class-card {
+            background: linear-gradient(135deg, rgba(202, 138, 4, 0.15) 0%, rgba(202, 138, 4, 0.05) 100%);
+            color: #f5f5f4;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .class-card:hover {
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 10px 15px -3px rgba(202, 138, 4, 0.15), 0 4px 6px -2px rgba(202, 138, 4, 0.05);
+            background: linear-gradient(135deg, rgba(202, 138, 4, 0.15) 0%, rgba(202, 138, 4, 0.05) 100%);
+        }
+
+        .dark .class-card:hover {
+            box-shadow: 0 10px 15px -3px rgba(202, 138, 4, 0.2), 0 4px 6px -2px rgba(202, 138, 4, 0.1);
+        }
+
+        .class-title {
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.01em;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .class-info {
+            font-size: 0.7rem;
+            opacity: 0.8;
+            line-height: 1.3;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            margin-top: auto;
+        }
+
+        /* Grid styling */
+        .grid-border {
+            border-color: rgba(28, 25, 23, 0.08);
+        }
+
+        .dark .grid-border {
+            border-color: rgba(255, 255, 255, 0.06);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background dark:bg-[#111] h-screen text-text dark:text-gray-100 transition-colors duration-500 antialiased p-4 md:p-6 lg:p-8 relative overflow-hidden flex flex-col"
+    style="zoom: 0.9;">
+
+    <!-- Ambient Background Effects -->
+    <div class="ambient-orb bg-amber-200/40 dark:bg-amber-600/20 w-96 h-96 top-0 left-[-10%] animate-blob"></div>
+    <div class="ambient-orb bg-stone-300/40 dark:bg-stone-800/40 w-[30rem] h-[30rem] bottom-[-10%] right-[-5%] animate-blob"
+        style="animation-delay: 2s;"></div>
+    <div class="ambient-orb bg-yellow-100/30 dark:bg-yellow-900/20 w-80 h-80 top-[40%] left-[20%] animate-blob"
+        style="animation-delay: 4s;"></div>
+
+    <div class="max-w-7xl mx-auto flex flex-col gap-4 relative z-10 w-full flex-1 min-h-0">
+
+        <!-- Premium Header Area -->
+        <header
+            class="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-4 border-b border-stone-200 dark:border-stone-800 shrink-0">
+            <div class="space-y-2">
+                <div
+                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-stone-100 dark:bg-stone-800 text-xs font-semibold tracking-wide uppercase text-stone-500 dark:text-stone-400 mb-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-accent"></span>
+                    Học Kỳ II - 2025/2026
+                </div>
+                <h1
+                    class="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-primary dark:text-white flex items-center gap-3">
+                    Thời Khóa Biểu
+                </h1>
+                <p class="text-stone-500 dark:text-stone-400 font-medium text-lg" id="weekInfoDisplay">
+                    Đang tải dữ liệu...
+                </p>
+            </div>
+
+            <!-- Dynamic pill for active date -->
+            <div
+                class="glass-panel px-5 py-3 rounded-2xl flex items-center gap-3 shadow-sm border border-stone-200 dark:border-stone-800">
+                <i data-lucide="calendar" class="w-5 h-5 text-accent"></i>
+                <span id="dateRangeDisplay" class="font-medium text-stone-800 dark:text-stone-200">--/--/---- –
+                    --/--/----</span>
+            </div>
+        </header>
+
+        <!-- Controls Toolbar -->
+        <section class="flex flex-wrap items-center justify-between gap-4 shrink-0">
+
+            <div
+                class="flex items-center p-1.5 bg-stone-100/80 dark:bg-stone-800/80 backdrop-blur-md rounded-xl border border-stone-200/50 dark:border-stone-700/50 shadow-sm">
+                <button id="prevBtn"
+                    class="px-4 py-2.5 text-sm font-semibold rounded-lg hover:bg-white dark:hover:bg-stone-700 hover:shadow-sm transition-all duration-300 flex items-center gap-2">
+                    <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                    <span class="hidden sm:inline">Tuần trước</span>
+                </button>
+                <div class="w-px h-6 bg-stone-300 dark:bg-stone-600 mx-1"></div>
+                <button id="currentBtn"
+                    class="px-5 py-2.5 text-sm font-bold rounded-lg text-primary dark:text-white hover:bg-white dark:hover:bg-stone-700 hover:shadow-sm transition-all duration-300">
+                    Tuần hiện tại
+                </button>
+                <div class="w-px h-6 bg-stone-300 dark:bg-stone-600 mx-1"></div>
+                <button id="nextBtn"
+                    class="px-4 py-2.5 text-sm font-semibold rounded-lg hover:bg-white dark:hover:bg-stone-700 hover:shadow-sm transition-all duration-300 flex items-center gap-2">
+                    <span class="hidden sm:inline">Tuần sau</span>
+                    <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <div
+                    class="flex items-center gap-3 px-4 py-2.5 bg-stone-100/80 dark:bg-stone-800/80 backdrop-blur-md rounded-xl border border-stone-200/50 dark:border-stone-700/50 shadow-sm">
+                    <label for="weekInput"
+                        class="text-sm font-semibold text-stone-500 dark:text-stone-400 cursor-pointer">Chuyển đến
+                        tuần:</label>
+                    <input type="number" id="weekInput" min="30" max="60" value="30"
+                        class="w-14 bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-700 rounded-md py-1 px-2 text-center text-sm font-bold text-primary dark:text-white focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all">
+                </div>
+
+                <button id="themeToggle"
+                    class="p-3 bg-stone-100/80 dark:bg-stone-800/80 backdrop-blur-md rounded-xl border border-stone-200/50 dark:border-stone-700/50 shadow-sm hover:shadow-md hover:bg-white dark:hover:bg-stone-700 transition-all duration-300 group">
+                    <i data-lucide="moon"
+                        class="w-5 h-5 text-stone-600 dark:text-stone-300 group-hover:text-accent transition-colors"
+                        id="themeIcon"></i>
+                </button>
+            </div>
+
+        </section>
+
+        <!-- Timetable Glass Canvas -->
+        <section
+            class="bg-white dark:bg-stone-900 rounded-2xl md:rounded-3xl shadow-sm border border-stone-200 dark:border-stone-800 flex-1 min-h-0 flex flex-col relative overflow-hidden">
+            <div class="overflow-auto flex-1 h-full scroll-smooth">
+                <div id="timetableGrid"
+                    class="min-w-[900px] h-full grid grid-cols-[80px_repeat(6,1fr)] text-sm bg-white dark:bg-[#1C1917]"
+                    style="grid-template-rows: auto repeat(12, minmax(35px, 1fr));">
+                    <!-- Rendered by JS -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Application Logic -->
+    <script>
+        lucide.createIcons();
+
+        const BASE_WEEK = 30;
+        const BASE_DATE = new Date(2026, 2, 2);
+
+        const PERIOD_TIMES = [
+            "07:00–07:50", "07:55–08:45", "08:50–09:40", "09:45–10:35", "10:40–11:30",
+            "13:00–13:50", "13:55–14:45", "14:50–15:40", "15:45–16:35", "16:40–17:30",
+            "18:00–18:50", "18:50–19:40"
+        ];
+
+        const SCHEDULE_DATA = [
+            { name: "Internet vạn vật (KHD3)", teacher: "PGS.TS. Ngô Xuân Cường", room: "P.2.12", day: 2, startPeriod: 6, span: 3, startWeek: 31, endWeek: 45 },
+            { name: "Các thuật toán tối ưu cho PTDL (KHD3)", teacher: "ThS. Hoàng Trọng Lợi", room: "R.III.1", day: 3, startPeriod: 6, span: 3, startWeek: 32, endWeek: 44 },
+            { name: "Các thuật toán tối ưu cho PTDL (KHD3)", teacher: "ThS. Hoàng Trọng Lợi", room: "R.III.1", day: 4, startPeriod: 6, span: 3, startWeek: 34, endWeek: 40 },
+            { name: "Khai phá dữ liệu lớn (KHD3)", teacher: "TS. Hồ Quốc Dũng", room: "R.III.1", day: 3, startPeriod: 9, span: 2, startWeek: 32, endWeek: 44 },
+            { name: "Khai phá dữ liệu lớn (KHD3)", teacher: "TS. Hồ Quốc Dũng", room: "R.III.1", day: 4, startPeriod: 9, span: 2, startWeek: 34, endWeek: 43 },
+            { name: "Xử lý ngôn ngữ tự nhiên (KHD3)", teacher: "TS. Đoàn Thị Hồng Phước", room: "P.2.13", day: 5, startPeriod: 1, span: 3, startWeek: 30, endWeek: 44 },
+            { name: "Tư tưởng Hồ Chí Minh (KTĐ3...)", teacher: "ThS.GVC Đào Thế Đồng", room: "P.2.9", day: 6, startPeriod: 1, span: 4, startWeek: 44, endWeek: 47 },
+            { name: "Tư tưởng Hồ Chí Minh (KTĐ3...)", teacher: "ThS.GVC Đào Thế Đồng", room: "P.2.9", day: 7, startPeriod: 1, span: 4, startWeek: 44, endWeek: 47 }
+        ];
+
+        let currentDisplayedWeek = BASE_WEEK;
+        let isDarkMode = false;
+
+        function getDatesForWeek(weekNum) {
+            const weeksDiff = weekNum - BASE_WEEK;
+            const monday = new Date(BASE_DATE.getTime());
+            monday.setDate(monday.getDate() + (weeksDiff * 7));
+            const dates = [];
+            for (let i = 0; i < 6; i++) {
+                let d = new Date(monday.getTime());
+                d.setDate(monday.getDate() + i);
+                dates.push(d);
+            }
+            const sunday = new Date(monday.getTime());
+            sunday.setDate(monday.getDate() + 6);
+            return { monday, sunday, dates };
+        }
+
+        function formatDateDisplay(date) { return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}`; }
+        function formatFullDateDisplay(date) { return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`; }
+
+        function calculateCurrentSystemWeek() {
+            const now = new Date();
+            const baseStart = new Date(BASE_DATE.getTime());
+            baseStart.setHours(0, 0, 0, 0);
+            const nowTime = now.setHours(0, 0, 0, 0);
+            const diffTime = nowTime - baseStart.getTime();
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+            if (nowTime < baseStart.getTime()) return BASE_WEEK;
+            return BASE_WEEK + Math.floor(diffDays / 7);
+        }
+
+        function renderWeek(weekNum) {
+            const { monday, sunday, dates } = getDatesForWeek(weekNum);
+
+            document.getElementById('weekInput').value = weekNum;
+            document.getElementById('weekInfoDisplay').innerHTML = `Tuần học thứ <span class="text-accent font-bold">${weekNum}</span>`;
+            document.getElementById('dateRangeDisplay').innerHTML = `${formatFullDateDisplay(monday)} &mdash; ${formatFullDateDisplay(sunday)}`;
+
+            const gridEl = document.getElementById('timetableGrid');
+            gridEl.innerHTML = '';
+
+            const activeClasses = SCHEDULE_DATA.filter(c => weekNum >= c.startWeek && weekNum <= c.endWeek);
+
+            // Map occupied cells
+            const occupied = {};
+            activeClasses.forEach(cls => {
+                for (let r = cls.startPeriod; r < cls.startPeriod + cls.span; r++) {
+                    occupied[`${r}-${cls.day}`] = true;
+                }
+            });
+
+            const days = ["Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7"];
+
+            // Render Headers (Row 1)
+            let html = `
+                <div class="sticky top-0 z-30 bg-white dark:bg-stone-900 border-b border-stone-200 dark:border-stone-800 p-3 flex flex-col items-center justify-center font-bold text-stone-800 dark:text-stone-200">
+                    Tiết
+                </div>
+            `;
+
+            for (let i = 0; i < 6; i++) {
+                const borderH = i < 5 ? 'border-r' : '';
+                html += `
+                    <div class="sticky top-0 z-30 bg-white dark:bg-stone-900 border-b border-stone-200 dark:border-stone-800 ${borderH} p-3 text-center flex flex-col items-center justify-center">
+                        <div class="font-bold text-stone-800 dark:text-stone-200">${days[i]}</div>
+                        <div class="text-[11px] text-stone-500 dark:text-stone-400 mt-0.5">${formatDateDisplay(dates[i])}</div>
+                    </div>
+                `;
+            }
+
+            // Render Body (Rows 2 to 13)
+            for (let period = 1; period <= 12; period++) {
+                const rowIdx = period + 1;
+                const bBorder = period === 12 ? '' : 'border-b';
+
+                // Tiết column
+                html += `
+                    <div style="grid-area: ${rowIdx} / 1 / ${rowIdx + 1} / 2;" class="${bBorder} border-r border-stone-200 dark:border-stone-800 p-2 flex flex-col items-center justify-center text-center">
+                        <span class="font-black text-base text-stone-800 dark:text-stone-200 leading-tight">${period}</span>
+                        <span class="text-[10px] sm:text-[11px] whitespace-nowrap text-stone-500 dark:text-stone-400 mt-0.5 tracking-tight">${PERIOD_TIMES[period - 1]}</span>
+                    </div>
+                `;
+
+                // Days columns
+                for (let col = 2; col <= 7; col++) {
+                    if (!occupied[`${period}-${col}`]) {
+                        const rBorder = col < 7 ? 'border-r' : '';
+                        html += `
+                            <div style="grid-area: ${rowIdx} / ${col} / ${rowIdx + 1} / ${col + 1};" class="${bBorder} ${rBorder} border-stone-200 dark:border-stone-800 flex items-center justify-center text-stone-300 dark:text-stone-700/60 select-none">
+                                -
+                            </div>
+                        `;
+                    }
+                }
+            }
+            gridEl.innerHTML = html;
+
+            // Render Class Blocks
+            activeClasses.forEach(cls => {
+                const rowStart = cls.startPeriod + 1;
+                const rowEnd = cls.startPeriod + cls.span + 1;
+                const colStart = cls.day;
+
+                const isLastCol = cls.day === 7;
+                const isLastRow = (cls.startPeriod + cls.span - 1) === 12;
+
+                const rBorder = !isLastCol ? 'border-r border-stone-200 dark:border-stone-800' : '';
+                const bBorder = !isLastRow ? 'border-b border-stone-200 dark:border-stone-800' : '';
+
+                const blockArea = document.createElement('div');
+                blockArea.style.gridArea = `${rowStart} / ${colStart} / ${rowEnd} / ${colStart + 1}`;
+                blockArea.className = `p-[4px] relative z-10 ${rBorder} ${bBorder}`;
+
+                blockArea.innerHTML = `
+                    <div class="w-full h-full rounded-md bg-[#ebf4fb] dark:bg-sky-900/30 p-2.5 overflow-hidden flex flex-col group cursor-pointer hover:shadow-md transition-shadow">
+                        <div class="font-bold text-[14px] sm:text-[15px] text-[#0f172a] dark:text-[#f1f5f9] leading-tight mb-1 line-clamp-2" title="${cls.name}">${cls.name}</div>
+                        <div class="text-[12px] sm:text-[13px] text-[#475569] dark:text-[#94a3b8] leading-relaxed flex flex-col mt-auto gap-0.5">
+                            <span class="truncate" title="${cls.room}">${cls.room}</span>
+                            <span class="truncate" title="${cls.teacher}">${cls.teacher}</span>
+                        </div>
+                    </div>
+                `;
+                gridEl.appendChild(blockArea);
+            });
+
+            lucide.createIcons();
+        }
+
+        // Add custom animation styles via script
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes fadeSlideIn {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        document.getElementById('prevBtn').addEventListener('click', () => { currentDisplayedWeek--; renderWeek(currentDisplayedWeek); });
+        document.getElementById('nextBtn').addEventListener('click', () => { currentDisplayedWeek++; renderWeek(currentDisplayedWeek); });
+        document.getElementById('currentBtn').addEventListener('click', () => { currentDisplayedWeek = calculateCurrentSystemWeek(); renderWeek(currentDisplayedWeek); });
+        document.getElementById('weekInput').addEventListener('change', (e) => {
+            const val = parseInt(e.target.value);
+            if (!isNaN(val)) { currentDisplayedWeek = val; renderWeek(currentDisplayedWeek); }
+        });
+
+        const themeToggle = document.getElementById('themeToggle');
+        const htmlElement = document.documentElement;
+
+        function updateThemeIcon() {
+            const icon = document.getElementById('themeIcon');
+            if (isDarkMode) {
+                icon.setAttribute('data-lucide', 'sun');
+                htmlElement.classList.add('dark');
+            } else {
+                icon.setAttribute('data-lucide', 'moon');
+                htmlElement.classList.remove('dark');
+            }
+            lucide.createIcons();
+        }
+
+        themeToggle.addEventListener('click', () => {
+            isDarkMode = !isDarkMode;
+            localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+            updateThemeIcon();
+        });
+
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            isDarkMode = true;
+        } else {
+            isDarkMode = false;
+        }
+        updateThemeIcon();
+
+        currentDisplayedWeek = calculateCurrentSystemWeek();
+        renderWeek(currentDisplayedWeek);
+    </script>
+</body>
+
+</html>
